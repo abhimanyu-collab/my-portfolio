@@ -1,0 +1,31 @@
+name: Masterpiece CI Pipeline
+
+# This tells the pipeline to trigger every time code is pushed to the master branch
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest # Spins up a fresh Linux server in the cloud
+
+    steps:
+    # Step 1: Get the code
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v3
+
+    # Step 2: Install Node.js
+    - name: ⚙️ Setup Node.js Environment
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x' # Standard stable version
+
+    # Step 3: Install all your packages (Express, Mongoose, etc.)
+    - name: 📦 Install Dependencies
+      run: npm install
+
+    # Step 4: Verify the engine can start without crashing
+    - name: 🚀 Verify Node Engine
+      run: node --version
